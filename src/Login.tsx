@@ -10,7 +10,7 @@ type LoginProps = {
 const Login = () => {
 
     const [password, setPassword] = useState('');
-    const [email, setEmail] = useState('');
+    const [username, setUsername] = useState('');
     const [error, setError] = useState('');
     const [error2, setError2] = useState('');
 
@@ -23,11 +23,11 @@ const Login = () => {
             setError('');
         }
     };
-    const handleEmailChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    const handleUsernameChange = (e:React.ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
-        setEmail(value);
+        setUsername(value);
         if (value === '') {
-            setError2('Please choose an email address.');
+            setError2('Please choose an username.');
         } else {
             setError2('');
         }
@@ -50,7 +50,7 @@ const Login = () => {
             </div>
         );
     };
-    const changeEmailInput = ({ data, error, handleChange }: LoginProps): JSX.Element => {
+    const changeUsernameInput = ({ data, error, handleChange }: LoginProps): JSX.Element => {
         return (
             <div>
                 <input
@@ -58,9 +58,9 @@ const Login = () => {
                             ${
                         error ? 'border-red-500' : 'border-gray-700'
                     }`}
-                    id="email"
+                    id="username"
                     type="text"
-                    placeholder="E-Mail"
+                    placeholder="Username"
                     value={data}
                     onChange={handleChange}
                 />
@@ -73,16 +73,16 @@ const Login = () => {
     return (
         <div className="flex items-center justify-center h-screen">
             <div className="pt-20">
-                <div className="darkened-background shadow-md rounded pt-1 pb-1 mb-4">
+                <div className="darkened-background shadow-md rounded pt-1 pb-1 mb-4 animate-fade-in-down" >
                     <h1 className="text-white">Login Form</h1>
                     <h2 className="text-white"> Please login to the system</h2>
                 </div>
-                <form className="darkened-background shadow-md rounded px-8 pt-8 pb-8 mb-4">
+                <form className="darkened-background shadow-md rounded px-8 pt-8 pb-8 mb-4 animate-fade-in-up">
                     <div className="mb-4">
                     <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="username">
                         Username
                     </label>
-                        {changeEmailInput({data: email, error: error2, handleChange: handleEmailChange })}
+                        {changeUsernameInput({data: username, error: error2, handleChange: handleUsernameChange })}
                     </div>
                 <div className="mb-4">
                     <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="password">
@@ -99,7 +99,7 @@ const Login = () => {
             </div>
             <button className="mb-4" type="submit">Login</button>
                 <div className="items-center justify-between">
-                    <span className="text-white">New Here? <Link to="/register" className="text-blue-500 hover:text-blue-200">Create an account</Link></span>
+                    <span className="text-white">New here? <Link to="/register" className="text-blue-500 hover:text-blue-200">Create an account</Link></span>
                 </div>
             </form>
             </div>
