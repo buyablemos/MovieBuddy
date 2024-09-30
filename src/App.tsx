@@ -12,49 +12,60 @@ function App() {
 
   return (
       <>
-          <div className="flex flex-col min-h-screen">
-          <header className="NameHeader animate-fade-in-down">
-              <div className="flex items-center justify-between">
+      <div className="background-container">
+          
 
-                  <div className="logo-movie">MovieBuddy</div>
-
-                  <div className="flex items-end">
+          <div className="flex flex-col items-center">
 
 
-                      <div>
-                          <p>Powered by</p>
+                  <div className="NameHeader animate-fade-in-down">
+                      <div className="flex items-center justify-between">
 
-                          <div className="flex items-center justify-between">
+                          <div className="logo-movie">MovieBuddy</div>
 
-                              <a href="https://vitejs.dev" target="_blank">
-                                  <img src={viteLogo} className="logo" alt="Vite logo"/>
-                              </a>
-                              <a href="https://react.dev" target="_blank">
-                                  <img src={reactLogo} className="logo react" alt="React logo"/>
-                              </a>
-                              <a href="https://pwr.edu.pl" target="_blank">
-                                  <img src={pwrLogo} className="logo" alt="Pwr logo"/>
-                              </a>
+                          <div className="flex items-end">
 
+
+                              <div>
+                                  <div className="font-extralight mb-2">Powered by</div>
+
+                                  <div className="flex items-center justify-between">
+
+                                      <a href="https://vitejs.dev" target="_blank">
+                                          <img src={viteLogo} className="logo" alt="Vite logo"/>
+                                      </a>
+                                      <a href="https://react.dev" target="_blank">
+                                          <img src={reactLogo} className="logo react" alt="React logo"/>
+                                      </a>
+                                      <a href="https://pwr.edu.pl" target="_blank">
+                                          <img src={pwrLogo} className="logo" alt="Pwr logo"/>
+                                      </a>
+
+                                  </div>
+                              </div>
                           </div>
                       </div>
                   </div>
-              </div>
-          </header>
+
+                    <div className="flex">
+
+                      <Routes>
+                          <Route path="/" element={<Login/>}/>
+                          <Route path="/register" element={<Register/>}/>
+                          <Route path="/dashboard" element={
+                              <PrivateRoute>
+                                  <Dashboard/>
+                              </PrivateRoute>
+                          }/>
+                      </Routes>
 
 
-              <div className="background-container">
-                  <Routes>
-                  <Route path="/" element={<Login />} />
-                  <Route path="/register" element={<Register />} />
-                  <Route path="/dashboard" element={
-                      <PrivateRoute>
-                          <Dashboard />
-                      </PrivateRoute>
-                  } />
-              </Routes>
+                    </div>
+
           </div>
+
               </div>
+
       </>
 
   )

@@ -136,14 +136,14 @@ const Register = () => {
 
 
     return (
-        <div className="mt-10 flex items-center justify-center h-full">
+        <div className="flex items-center justify-center h-full">
             <div className="">
                 <div className="darkened-background shadow-md rounded pt-1 pb-1 mb-4 animate-fade-in-down">
                     <h1 className="text-white">Register Form</h1>
                     <h2 className="text-white">Create a new account</h2>
                 </div>
                 <form
-                    className="overflow-y-auto max-h-[50vh] darkened-background shadow-md rounded px-8 pt-8 pb-8 mb-4 animate-fade-in-up">
+                    className="overflow-y-auto max-h-[60vh] darkened-background shadow-md rounded px-8 pt-8 pb-8 mb-4 animate-fade-in-up">
                     <div className="mb-4">
                         <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="username">
                             Username

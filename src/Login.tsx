@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import Popup from './Popup'
 import { useNavigate } from 'react-router-dom';
-import { GoogleOAuthProvider, GoogleLogin } from '@react-oauth/google';
+import {GoogleOAuthProvider, GoogleLogin, CredentialResponse} from '@react-oauth/google';
 import {JwtPayload, jwtDecode } from "jwt-decode";
 
 type LoginProps = {
@@ -131,88 +131,104 @@ const Login = () => {
         console.log('Google Login Failed');
     };
 
-    const handleGoogleLoginSuccess = async (credentialResponse: any) => {
-        const decoded :CustomJwtPayload = jwtDecode(credentialResponse.credential);
-        const email = decoded.email;
-        const googleId = decoded.sub;
+    const handleGoogleLoginSuccess = async (credentialResponse: CredentialResponse) => {
 
-        setUsermail(email);
 
-        try {
-            const response = await axios.post('http://127.0.0.1:5000/login-google', {
-                email,
-                googleId,
-            });
+            if(credentialResponse.credential) {
+                const decoded: CustomJwtPayload = jwtDecode(credentialResponse.credential);
+                const email = decoded.email;
+                const googleId = decoded.sub;
+                setUsermail(email);
 
-            if (response.data.success) {
-                if (rememberMe) {
-                    localStorage.setItem('token', response.data.token);
-                } else {
-                    sessionStorage.setItem('token', response.data.token);
+
+                try {
+                    const response = await axios.post('http://127.0.0.1:5000/login-google', {
+                        email,
+                        googleId,
+                    });
+
+                    if (response.data.success) {
+                        if (rememberMe) {
+                            localStorage.setItem('token', response.data.token);
+                        } else {
+                            sessionStorage.setItem('token', response.data.token);
+                        }
+                        navigate('/dashboard');
+                    } else {
+                        setGoogleError(true)
+                    }
+                } catch (error) {
+                    console.log('Login failed:', error);
                 }
-                navigate('/dashboard');
-            } else {
-                setGoogleError(true)
             }
-        } catch (error) {
-            console.log('Login failed:', error);
-        }
+            else{
+                console.error("Credential from Google is undefined");
+            }
+
+
     };
 
 
     return (
-        <div className="flex items-center justify-center h-screen">
-            <div className="pt-20">
-                <div className="darkened-background shadow-md rounded pt-1 pb-1 mb-4 animate-fade-in-down" >
-                    <h1 className="text-white">Login Form</h1>
-                    <h2 className="text-white"> Please login to the system</h2>
+        <div className="flex items-center justify-center h-full">
+            <div className="">
+                <div className="darkened-background shadow-md rounded pt-1 pb-1 mb-4 animate-fade-in-down">
+                    <h1 className="text-white ">Login Form</h1>
+                    <h2 className="text-white">Login to your account</h2>
                 </div>
-                <form className="darkened-background shadow-md rounded px-8 pt-8 pb-8 mb-4 animate-fade-in-up">
+                <form
+                    className="overflow-y-auto max-h-[60vh] darkened-background shadow-md rounded px-8 pt-8 pb-8 mb-4 animate-fade-in-up">
                     <div className="mb-4">
-                    <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="username">
-                        Username
-                    </label>
-                        {changeUsernameInput({data: username, error: error2, handleChange: handleUsernameChange })}
+                        <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="username">
+                            Username
+                        </label>
+                        {changeUsernameInput({data: username, error: error2, handleChange: handleUsernameChange})}
                     </div>
-                <div className="mb-4">
-                    <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="password">
-                        Password
-                    </label>
-                    {changePasswordInput({data: password, error: error, handleChange: handlePasswordChange })}
-            </div>
-            <div className="tems-center justify-between mb-4">
-                <label className="block text-gray-400 font-bold text-center">
-                    <input type="checkbox" checked={rememberMe}
-                           onChange={(e) => setRememberMe(e.target.checked)}/>
-                    <span className="text-sm px-3 mb-4">
+                    <div className="mb-4">
+                        <label className="block text-gray-200 text-sm font-bold mb-2" htmlFor="password">
+                            Password
+                        </label>
+                        {changePasswordInput({data: password, error: error, handleChange: handlePasswordChange})}
+                    </div>
+                    <div className="tems-center justify-between mb-4">
+                        <label className="block text-gray-400 font-bold text-center">
+                            <input type="checkbox" checked={rememberMe}
+                                   onChange={(e) => setRememberMe(e.target.checked)}/>
+                            <span className="text-sm px-3 mb-4">
                         Remember Me</span>
-                </label>
-            </div>
-            <button className="mb-4" type="submit" onClick={handleSubmit}>Login</button>
-                <div className="items-center justify-between">
-                    <span className="text-white">New here? <Link to="/register" className="text-blue-500 hover:text-blue-200">Create an account</Link></span>
-                </div>
-            </form>
-                <GoogleOAuthProvider clientId={clientId}>
-                    <div>
-                        <GoogleLogin
-                            onSuccess={handleGoogleLoginSuccess}
-                            onError={handleGoogleLoginError}
-                        />
+                        </label>
                     </div>
-                </GoogleOAuthProvider>
+                    <button className="mb-4" type="submit" onClick={handleSubmit}>Login</button>
+                    <div className="items-center justify-between mb-4">
+                        <span className="text-white">New here? <Link to="/register"
+                                                                     className="text-blue-500 hover:text-blue-200">Create an account</Link></span>
+                    </div>
+                    <GoogleOAuthProvider clientId={clientId}>
+                        <div>
+                            <GoogleLogin
+                                onSuccess={handleGoogleLoginSuccess}
+                                onError={handleGoogleLoginError}
+                            />
+                        </div>
+                    </GoogleOAuthProvider>
+                </form>
+
             </div>
             {googleError && (
                 <Popup
-                    message={'No users in database with your Google mail: '+usermail+" . Please register first!"}
-                    onClose={()=>{setGoogleError(false)}}
+                    message={'No users in database with your Google mail: ' + usermail + " . Please register first!"}
+                    onClose={() => {
+                        setGoogleError(false)
+                    }}
 
                 />
             )}
             {loginError && (
                 <Popup
                     message={loginError}
-                    onClose={()=>{setLoginError("")}}
+                    onClose={() => {
+                        setLoginError("")
+                    }}
 
                 />
             )}
@@ -220,7 +236,7 @@ const Login = () => {
 
 
     )
-;
+        ;
 };
 
 export default Login;
