@@ -111,7 +111,7 @@ const Register = () => {
                 username,
                 email,
                 password,
-                gender: selectedGender, // Dodaj wybraną płeć
+                gender: selectedGender,
             });
             console.log('Registration successful:', response.data);
             //Reset po pszesłaniu
@@ -188,7 +188,7 @@ const Register = () => {
                     <RadioGenderHorizontalList selectedGender={selectedGender} onGenderChange={handleGenderChange}>
                     </RadioGenderHorizontalList>
 
-                    <button className="mb-4" type="submit" onClick={handleSubmit}>Register</button>
+                    <button className="custom-button" type="submit" onClick={handleSubmit}>Register</button>
 
                     <div className="text-center">
                         <span className="text-white">Already have an account? <Link to="/"

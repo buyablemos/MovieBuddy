@@ -107,7 +107,7 @@ const Login = () => {
                 username,
                 password
             });
-            console.log('Login successful:', response.data);
+            localStorage.setItem('user', response.data.username);
             if (rememberMe) {
                 localStorage.setItem('token', response.data.token);
             } else {
@@ -148,6 +148,7 @@ const Login = () => {
                     });
 
                     if (response.data.success) {
+                        localStorage.setItem('user', response.data.username);
                         if (rememberMe) {
                             localStorage.setItem('token', response.data.token);
                         } else {
@@ -198,7 +199,7 @@ const Login = () => {
                         Remember Me</span>
                         </label>
                     </div>
-                    <button className="mb-4" type="submit" onClick={handleSubmit}>Login</button>
+                    <button className="custom-button" type="submit" onClick={handleSubmit}>Login</button>
                     <div className="items-center justify-between mb-4">
                         <span className="text-white">New here? <Link to="/register"
                                                                      className="text-blue-500 hover:text-blue-200">Create an account</Link></span>

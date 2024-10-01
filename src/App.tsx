@@ -7,6 +7,8 @@ import Login from './Login';
 import Register from './Register';
 import PrivateRoute from "./PrivateRoute";
 import Dashboard from './Dashboard';
+import UserDetails from "./UserDetails.tsx";
+import AddRating from "./RatingForm.tsx";
 
 function App() {
 
@@ -21,9 +23,11 @@ function App() {
                   <div className="NameHeader animate-fade-in-down">
                       <div className="flex items-center justify-between">
 
+                          <div>
                           <div className="logo-movie">MovieBuddy</div>
-
-                          <div className="flex items-end">
+                          <div className="font-extralight">Bachelor's thesis</div>
+                          </div>
+                          <div className="flex">
 
 
                               <div>
@@ -55,6 +59,18 @@ function App() {
                           <Route path="/dashboard" element={
                               <PrivateRoute>
                                   <Dashboard/>
+                              </PrivateRoute>
+                          }/>
+
+                          <Route path="/user-details" element={
+                              <PrivateRoute>
+                                  <UserDetails/>
+                              </PrivateRoute>
+                          }/>
+                          <Route path="/add-rating" element={
+                              <PrivateRoute>
+                                  <AddRating/>
+
                               </PrivateRoute>
                           }/>
                       </Routes>

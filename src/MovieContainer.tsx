@@ -33,7 +33,7 @@ const MoviesContainer: React.FC<MoviesContainerProps> = ({ apiUrl }) => {
     return (
         <div className="darkened-background shadow-md rounded pt-1 pb-1 mb-4 animate-fade-in-down">
             <h1 className="text-3xl font-bold text-center mb-8">Recommended Movies</h1>
-            <div className="flex flex-row justify-center overflow-auto min-h-[60vh] max-w-[90vw] px-8 pt-8 pb-8 animate-fade-in-up">
+            <div className="flex flex-row justify-center overflow-auto min-h-[70vh] max-w-[90vw] px-8 pt-8 pb-8 animate-fade-in-up">
                 {movies.map((movie, index) => (
                     <MovieDetails key={index} ranking={movie.ranking} title={movie.title} year={movie.year}/>
                 ))}

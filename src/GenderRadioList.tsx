@@ -34,8 +34,8 @@ const RadioGenderHorizontalList:React.FC<RadioGenderHorizontalListProps> = ({ se
                                 containerProps={{
                                     className: "p-0",
                                 }} crossOrigin={undefined}
-                                onChange={() => onGenderChange('male')}
-                                checked={selectedGender === 'male'}
+                                onChange={() => onGenderChange('M')}
+                                checked={selectedGender === 'M'}
                             />
                         </ListItemPrefix>
                         <Typography
@@ -61,8 +61,8 @@ const RadioGenderHorizontalList:React.FC<RadioGenderHorizontalListProps> = ({ se
                                 containerProps={{
                                     className: "p-0",
                                 }} crossOrigin={undefined}
-                                onChange={() => onGenderChange('female')}
-                                checked={selectedGender === 'female'}
+                                onChange={() => onGenderChange('F')}
+                                checked={selectedGender === 'F'}
                             />
                         </ListItemPrefix>
                         <Typography
