@@ -9,23 +9,24 @@ import PrivateRoute from "./PrivateRoute";
 import Dashboard from './Dashboard';
 import UserDetails from "./UserDetails.tsx";
 import AddRating from "./RatingForm.tsx";
+import Sidebar from "./Sidebar.tsx";
 
 function App() {
 
   return (
       <>
-      <div className="background-container">
-          
+          <div className="background-container">
 
-          <div className="flex flex-col items-center">
+
+              <div className="flex flex-col items-center">
 
 
                   <div className="NameHeader animate-fade-in-down">
                       <div className="flex items-center justify-between">
 
                           <div>
-                          <div className="logo-movie">MovieBuddy</div>
-                          <div className="font-extralight">Bachelor's thesis</div>
+                              <div className="logo-movie">MovieBuddy</div>
+                              <div className="font-extralight">Bachelor's thesis</div>
                           </div>
                           <div className="flex">
 
@@ -51,7 +52,14 @@ function App() {
                       </div>
                   </div>
 
-                    <div className="flex">
+
+                  <div className="flex w-full h-full">
+
+
+                      <Sidebar></Sidebar>
+
+
+                      <div className="flex w-[100vw] justify-center items-center">
 
                       <Routes>
                           <Route path="/" element={<Login/>}/>
@@ -76,11 +84,15 @@ function App() {
                       </Routes>
 
 
-                    </div>
+                      </div>
 
-          </div>
+
+                  </div>
 
               </div>
+
+
+          </div>
 
       </>
 

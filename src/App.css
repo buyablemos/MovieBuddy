@@ -35,6 +35,44 @@
 
 }
 
+.custom-sidebar {
+  position: fixed;
+  top: 9vw;
+  left: 0;
+  z-index:15;
+  height: 80vh;
+  width: 20vw;
+}
+
+.sidebar-item{
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  color: white;
+}
+.sidebar-item:hover {
+  background-color: white;
+  color: black;
+  border-color: rgb(106, 47, 205);
+  border-style: solid;
+  border-width: 2px;
+}
+
+.sidebar-inside {
+  background-color: rgba(0, 0, 0, 0.75);
+  height: 100%;
+  width: 100%;
+  padding-left: 1rem;
+}
+
+.vertical-text {
+  transform: rotate(90deg);
+  white-space: nowrap;
+  margin-left: 1rem;
+}
+
+
 .logo:hover {
   filter: drop-shadow(0 0 2em #646cffaa);
 }
