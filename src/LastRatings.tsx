@@ -55,9 +55,9 @@ const LastRatings: React.FC<LastRatingsProps> = ({userId} ) => {
 
     return (
         <div className="darkened-background shadow-md rounded pt-1 pb-1 mb-4 text-white animate-fade-in-up">
-            <h1>Last Ratings</h1>
+            <h2>Last Ratings</h2>
 
-            <div className="max-h-[25vh] overflow-y-auto">
+            <div className="mt-2 max-h-[30vh] overflow-y-auto">
                 <div className="flex flex-col items-center justify-center">
                     <ul>
                         {lastRatings.map(rating => (

@@ -22,7 +22,7 @@ interface MovieData {
     Awards: string;
     Poster: string;
     trailerId?: string | null;
-    ranking: number;
+    ranking: number | null;
 }
 
 const Modal: React.FC<ModalProps> = ({ isOpen, onClose, movie }) => {
@@ -34,7 +34,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, movie }) => {
                 className="bg-black p-4 rounded shadow-lg max-w-lg w-full bg-opacity-80 border-white border-solid border-2 overflow-y-auto ">
                 <div className="items-center justify-center max-h-[90vh]">
                 <h2 className="text-xl font-bold">{movie.Title} ({movie.Year})</h2>
-                <p>Ranking for you: {movie.ranking}</p>
+                    {movie.ranking&& <p>Ranking for you: {movie.ranking}</p>}
                 <p>{movie.Plot}</p>
                 <p>Genres: {movie.Genre}</p>
                 <p>Actors: {movie.Actors}</p>
@@ -54,7 +54,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, movie }) => {
                     </div>
                 )}
                 <button
-                    className="mb-4 mt-4 text-black" type="submit"
+                    className="mb-4 mt-4 custom-button" type="submit"
                     onClick={onClose}
                 >
                     Zamknij

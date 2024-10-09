@@ -29,7 +29,7 @@ const UserDetails: React.FC = () => {
     const [gender, setGender] = useState<string>('');
     const [age, setAge] = useState<number | string>('');
     const [occupation, setOccupation] = useState<string>('');
-    const [zipcode, setZipcode] = useState<string>('');
+    const [zipcode, setZipcode] = useState<number>(0);
 
     const isValidEmail = (email: string) => {
         const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -45,11 +45,18 @@ const UserDetails: React.FC = () => {
         }
     };
 
+    const checkZipcode = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const new_value = parseInt(e.target.value);
+        if (!isNaN(new_value)&&(new_value>=0)) {
+            setZipcode(new_value);
+        }
+    };
+
     const changeInput = ({ data, error, handleChange }: changeInputProps, type: string, placeholder: string, id: string): JSX.Element => {
         return (
             <div>
                 <input
-                    className={`shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline ${
+                    className={`bg-white shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-2 leading-tight focus:outline-none focus:shadow-outline ${
                         error ? 'border-red-500' : 'border-gray-700'
                     }`}
                     id={id}
@@ -214,8 +221,8 @@ const UserDetails: React.FC = () => {
                         type="number"
                         id="zipcode"
                         value={zipcode}
-                        onChange={(e) => setZipcode(e.target.value)}
-                        className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        onChange={checkZipcode}
+                        className="shadow appearance-none bg-white border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                     />
                 </div>
                 <button className="custom-button"

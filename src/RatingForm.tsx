@@ -95,8 +95,8 @@ const AddRating: React.FC = () => {
     return (
         <div>
         <div className="darkened-background shadow-md rounded pt-1 pb-1 mb-4 text-white">
-            <div className="min-w-[70vw] min-h-[35vh] justify-center items-center animate-fade-in-up">
-            <h1 className="mb-4">Add Movie Rating</h1>
+            <div className="min-w-[70vw] min-h-[20vh] justify-center items-center animate-fade-in-up">
+            <h2 className="mb-4">Add Movie Rating</h2>
             <input
                 className="text-center bg-white shadow border rounded w-[60vw] py-2 px-3 pr-3 pl-3 text-black mb-2 leading-tight focus:outline-none focus:shadow-outline"
                 type="text"

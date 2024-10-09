@@ -6,7 +6,7 @@ import fetchTrailerId from "./findYTtrailer.ts";
 
 interface MovieDetailsProps {
     title: string;
-    ranking: number;
+    ranking: number|null;
     year: number;
 }
 
@@ -82,17 +82,17 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ title,year , ranking }) => 
     if (movieNotFound) return (
         <div>
         <p className="text-sm text-gray-500 mt-2">{title}</p>
-        <p className="text-sm text-gray-500">Predicted Ranking: {ranking}</p>
+            {ranking&&<p className="text-sm text-gray-500">Predicted Ranking: {ranking}</p>}
         <p className="text-center mr-4">Details not found</p>
         </div>)
 
     return (
         <div>
-        <div className="max-h-[35vh]">
+        <div className="max-h-[35vh] min-w-[10vw]">
         <div className="movie-details darkened-background shadow-md rounded pt-1 pb-1 mb-4 animate-fade-in-up items-center justify-center" onClick={() => handleMovieClick(movieData)}>
             <img src={movieData.Poster} alt={movieData.Title} className="poster mb-4 rounded-lg" />
             <p className="text-sm text-gray-500 mt-2">{movieData.Title}</p>
-            <p className="text-sm text-gray-500">Predicted Ranking: {ranking}</p>
+            {ranking&&<p className="text-sm text-gray-500">Predicted Ranking: {ranking}</p>}
         </div>
         </div>
         <Modal isOpen={isModalOpen} onClose={closeModal} movie={selectedMovie} />

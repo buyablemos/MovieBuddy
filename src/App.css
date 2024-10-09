@@ -50,6 +50,7 @@
   padding: 1rem;
   border-radius: 0.5rem;
   color: white;
+  background: #171717;
 }
 .sidebar-item:hover {
   background-color: white;
@@ -79,6 +80,7 @@
 .logo.react:hover {
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
+
 
 @keyframes logo-spin {
   from {

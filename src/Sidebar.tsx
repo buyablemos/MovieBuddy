@@ -23,40 +23,48 @@ const Sidebar = () => {
                             <a className="">
                             <button
                                 type="button"
-                                className="sidebar-item flex w-full"
+                                className="sidebar-item flex w-full text-white hover:text-black"
                                 aria-controls="dropdown-example"
                                 onClick={toggleDropdown}
                             >
                                 <img src="/src/assets/recommendation-icon.png" alt="Recommendation Icon"
                                      className="w-5 h-5"/>
                                 <span
-                                    className="flex-1 ms-3 text-center text-black whitespace-nowrap">Recommendations</span>
+                                    className="flex-1 ms-3 text-center whitespace-nowrap">Recommendations</span>
                                 <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                      fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
                                           strokeWidth="2" d="m1 1 4 4 4-4"/>
                                 </svg>
                             </button>
-                            <ul id="dropdown-example" className={`${isOpen ? 'block' : 'hidden'} py-2 space-y-2`}>
-                                <li>
-                                    <a href="#"
-                                       className="sidebar-item flex">Option 1</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                       className="sidebar-item flex">Option 2</a>
-                                </li>
-                                <li>
-                                    <a href="#"
-                                       className="sidebar-item flex">Option 3</a>
-                                </li>
-                            </ul>
+                                <ul id="dropdown-example" className={`${isOpen ? 'block' : 'hidden'} py-2 space-y-2`}>
+                                    <li>
+                                        <a href="/NNCBF"
+                                           className="sidebar-item flex">Neural Network CBF</a>
+                                    </li>
+                                    <li>
+                                        <a href="/NNCF"
+                                           className="sidebar-item flex">Neural Network CF</a>
+                                    </li>
+                                    <li>
+                                        <a href="/kNNmovie"
+                                           className="sidebar-item flex">kNN - find something by movie title</a>
+                                    </li>
+                                    <li>
+                                        <a href="/kNNhistory"
+                                           className="sidebar-item flex">kNN - find something by your history</a>
+                                    </li>
+                                    <li>
+                                        <a href="/SVD"
+                                           className="sidebar-item flex">SVD</a>
+                                    </li>
+                                </ul>
                             </a>
                         </li>
                         <li>
-                            <a href="/dashboard"
+                            <a href="/"
                                className="sidebar-item flex">
-                                <svg
+                            <svg
                                     className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400"
                                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                     viewBox="0 0 22 21">

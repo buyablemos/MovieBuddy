@@ -10,6 +10,12 @@ import Dashboard from './Dashboard';
 import UserDetails from "./UserDetails.tsx";
 import AddRating from "./RatingForm.tsx";
 import Sidebar from "./Sidebar.tsx";
+import NeuralNetworkCF  from "./recommendationScreens/NeuralNetworkCF.tsx";
+import NeuralNetworkCBF from "./recommendationScreens/NeuralNetworkCBF.tsx";
+import KnnHistory from "./recommendationScreens/kNN_history.tsx";
+import KnnMovie from "./recommendationScreens/kNN_movie.tsx";
+import SVD from "./recommendationScreens/SVD.tsx";
+
 
 function App() {
 
@@ -62,12 +68,12 @@ function App() {
                       <div className="flex w-[100vw] justify-center items-center">
 
                       <Routes>
-                          <Route path="/" element={<Login/>}/>
+                          <Route path="/login" element={<Login/>}/>
                           <Route path="/register" element={<Register/>}/>
-                          <Route path="/dashboard" element={
-                              <PrivateRoute>
+                          <Route path="/" element={
+
                                   <Dashboard/>
-                              </PrivateRoute>
+
                           }/>
 
                           <Route path="/user-details" element={
@@ -78,6 +84,35 @@ function App() {
                           <Route path="/add-rating" element={
                               <PrivateRoute>
                                   <AddRating/>
+
+                              </PrivateRoute>
+                          }/>
+                          <Route path="/NNCBF" element={
+                              <PrivateRoute>
+                                  <NeuralNetworkCBF/>
+
+                              </PrivateRoute>
+                          }/>
+                          <Route path="/NNCF" element={
+                              <PrivateRoute>
+                                  <NeuralNetworkCF/>
+
+                              </PrivateRoute>
+                          }/>
+                          <Route path="/kNNhistory" element={
+                              <PrivateRoute>
+                                  <KnnHistory/>
+                              </PrivateRoute>
+                          }/>
+                          <Route path="/kNNmovie" element={
+
+                              <KnnMovie/>
+
+
+                          }/>
+                          <Route path="/SVD" element={
+                              <PrivateRoute>
+                                  <SVD/>
 
                               </PrivateRoute>
                           }/>

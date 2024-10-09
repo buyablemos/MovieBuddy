@@ -1,10 +1,22 @@
-import MovieContainer from "./MovieContainer.tsx";
 
 const Dashboard = () => {
     return (
-        <div className="flex flex-col min-h-screen text-white">
-            <MovieContainer apiUrl="http://127.0.0.1:5000/reccomend_on_user_NN_CF?user_id=50&n_reccomend=20"> </MovieContainer>
+        <>
+            <div className="NameHeader max-w-[80vw] rounded pt-1 pb-1 mb-4 animate-fade-in-down text-white items-center justify-center">
+                <div className="text-center"></div>
+                <h1 className="mt-2">Welcome on my recommendation system!</h1>
+                <div className="text-center">
+                    <div className="mt-10 mb-5">
+                        <h2 className="mb-5">Here you get get tailored recommendations based on your profile.</h2>
+
+                        Don't forget to create an account and rate
+                        movies that you previously watched.
+                        Without profile you can only use recommendation methods based on movie title.
+                    </div>
+                </div>
+
         </div>
+        </>
     );
 };
 
