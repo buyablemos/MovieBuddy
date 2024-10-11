@@ -1,4 +1,4 @@
-import MovieContainer from "../MovieContainer.tsx";
+import MovieContainer from "../ShowingMovie/MovieContainer.tsx";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Slider} from "@material-tailwind/react";

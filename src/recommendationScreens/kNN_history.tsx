@@ -1,8 +1,8 @@
-import MovieContainer from "../MovieContainer.tsx";
+import MovieContainer from "../ShowingMovie/MovieContainer.tsx";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Slider} from "@material-tailwind/react";
-import RouteOnlyIfModelIsTrainedOnUser from "../RouteOnlyIfModelIsTrainedOnUser.tsx";
+import RouteOnlyIfModelIsTrainedOnUser from "../checkAcces/RouteOnlyIfModelIsTrainedOnUser.tsx";
 
 const KnnHistory = () => {
     const [userId, setUserId] = useState<number | null>(null);

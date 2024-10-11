@@ -3,21 +3,21 @@ import viteLogo from '/vite.svg'
 import pwrLogo from '/pwr.png'
 import './App.css'
 import { Route, Routes } from 'react-router-dom';
-import Login from './Login';
-import Register from './Register';
-import PrivateRoute from "./PrivateRoute";
+import Login from './Login-Register/Login.tsx';
+import Register from './Login-Register/Register.tsx';
+import PrivateRoute from "./checkAcces/PrivateRoute.tsx";
 import Dashboard from './Dashboard';
 import UserDetails from "./UserDetails.tsx";
-import AddRating from "./RatingForm.tsx";
+import AddRating from "./RatingScreen/RatingForm.tsx";
 import Sidebar from "./Sidebar.tsx";
 import NeuralNetworkCF  from "./recommendationScreens/NeuralNetworkCF.tsx";
 import NeuralNetworkCBF from "./recommendationScreens/NeuralNetworkCBF.tsx";
 import KnnHistory from "./recommendationScreens/kNN_history.tsx";
 import KnnMovie from "./recommendationScreens/kNN_movie.tsx";
 import SVD from "./recommendationScreens/SVD.tsx";
-import RouteOnlyAddedUserDetails from "./RouteOnlyAddedUserDetails.tsx";
-import RouteOnlyWithHistory from "./RouteOnlyWithHistory.tsx";
-import RouteOnlyIfModelIsTrainedOnUser from "./RouteOnlyIfModelIsTrainedOnUser.tsx";
+import RouteOnlyAddedUserDetails from "./checkAcces/RouteOnlyAddedUserDetails.tsx";
+import RouteOnlyWithHistory from "./checkAcces/RouteOnlyWithHistory.tsx";
+import RouteOnlyIfModelIsTrainedOnUser from "./checkAcces/RouteOnlyIfModelIsTrainedOnUser.tsx";
 
 
 function App() {

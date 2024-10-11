@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Modal from "./MovieDetailsWithTrailer.tsx";
-import fetchTrailerId from "./findYTtrailer.ts";
+import fetchTrailerId from "../findYTtrailer.ts";
 
 
 interface MovieDetailsProps {

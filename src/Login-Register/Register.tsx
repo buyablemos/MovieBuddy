@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import RadioGenderHorizontalList from './GenderRadioList'
-import Popup from './Popup'
+import RadioGenderHorizontalList from '../GenderRadioList.tsx'
+import Popup from '../Popup.tsx'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 

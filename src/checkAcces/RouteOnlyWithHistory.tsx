@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { Navigate } from 'react-router-dom';
 import axios, {AxiosResponse} from 'axios';
-import Popup from "./Popup.tsx";
+import Popup from "../Popup.tsx";
 
 const RouteOnlyAddedUserDetails = ({ children }: { children: React.ReactNode }) => {
     const [isAuthenticated,setIsAuthenticated] = useState(false);

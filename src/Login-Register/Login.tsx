@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import React, { useState } from 'react';
 import axios from 'axios';
-import Popup from './Popup'
+import Popup from '../Popup.tsx'
 import { useNavigate } from 'react-router-dom';
 import {GoogleOAuthProvider, GoogleLogin, CredentialResponse} from '@react-oauth/google';
 import {JwtPayload, jwtDecode } from "jwt-decode";

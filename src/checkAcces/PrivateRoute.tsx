@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import { Navigate } from 'react-router-dom';
-import Popup from "./Popup.tsx";
+import Popup from "../Popup.tsx";
 
 const PrivateRoute = ({ children }: { children: React.ReactNode }) => {
     const [isAuthenticated,setIsAuthenticated] = useState(false);

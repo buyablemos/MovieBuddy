@@ -135,7 +135,7 @@ const Sidebar = () => {
                             </a>
                         </li>}
                         {!isLoggedIn && <li>
-                            <a href="/login"
+                            <a href="/Login-Register/Login"
                                className="sidebar-item flex">
                                 <svg
                                     className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400"
