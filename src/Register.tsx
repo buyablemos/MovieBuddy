@@ -191,7 +191,7 @@ const Register = () => {
                     <button className="custom-button" type="submit" onClick={handleSubmit}>Register</button>
 
                     <div className="text-center">
-                        <span className="text-white">Already have an account? <Link to="/"
+                        <span className="text-white">Already have an account? <Link to="/login"
                                                                                     className="text-blue-500 hover:text-blue-200">Login</Link></span>
                     </div>
                     {registrationError && <p className="text-red-500 text-xs italic">{registrationError}</p>}

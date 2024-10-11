@@ -2,6 +2,7 @@ import MovieContainer from "../MovieContainer.tsx";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Slider} from "@material-tailwind/react";
+import RouteOnlyIfModelIsTrainedOnUser from "../RouteOnlyIfModelIsTrainedOnUser.tsx";
 
 const KnnHistory = () => {
     const [userId, setUserId] = useState<number | null>(null);
@@ -79,14 +80,18 @@ const KnnHistory = () => {
             {(apiUrl||apiUrl2)&&
                 <div className="flex flex-col text-white max-h-[60vh]">
                     <div className="overflow-y-auto">
+                        <RouteOnlyIfModelIsTrainedOnUser model={"knn_cf"}>
                         <div className="NameHeader rounded pt-1 pb-1 mb-4 animate-fade-in-up text-white">
                             {apiUrl && <h1>Recommended by CF version</h1>}
                             {apiUrl && <MovieContainer apiUrl={apiUrl}/>}
                         </div>
+                        </RouteOnlyIfModelIsTrainedOnUser>
+                        <RouteOnlyIfModelIsTrainedOnUser model={"knn_cbf"}>
                         <div className="NameHeader rounded pt-1 pb-1 mb-4 animate-fade-in-up text-white">
                             {apiUrl2 && <h1>Recommended by CBF version</h1>}
                             {apiUrl2 && <MovieContainer apiUrl={apiUrl2}/>}
                         </div>
+                        </RouteOnlyIfModelIsTrainedOnUser>
                     </div>
                 </div>
             }

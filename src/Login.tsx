@@ -113,7 +113,8 @@ const Login = () => {
             } else {
                 sessionStorage.setItem('token', response.data.token);
             }
-            navigate('/dashboard');
+            navigate('/');
+            window.location.reload();
 
         } catch (error) {
             console.error('Error registering:', error);
@@ -154,7 +155,8 @@ const Login = () => {
                         } else {
                             sessionStorage.setItem('token', response.data.token);
                         }
-                        navigate('/dashboard');
+                        navigate('/');
+                        window.location.reload();
                     } else {
                         setGoogleError(true)
                     }

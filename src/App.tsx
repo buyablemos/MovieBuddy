@@ -15,6 +15,9 @@ import NeuralNetworkCBF from "./recommendationScreens/NeuralNetworkCBF.tsx";
 import KnnHistory from "./recommendationScreens/kNN_history.tsx";
 import KnnMovie from "./recommendationScreens/kNN_movie.tsx";
 import SVD from "./recommendationScreens/SVD.tsx";
+import RouteOnlyAddedUserDetails from "./RouteOnlyAddedUserDetails.tsx";
+import RouteOnlyWithHistory from "./RouteOnlyWithHistory.tsx";
+import RouteOnlyIfModelIsTrainedOnUser from "./RouteOnlyIfModelIsTrainedOnUser.tsx";
 
 
 function App() {
@@ -89,19 +92,25 @@ function App() {
                           }/>
                           <Route path="/NNCBF" element={
                               <PrivateRoute>
-                                  <NeuralNetworkCBF/>
-
+                                  <RouteOnlyAddedUserDetails>
+                                      <RouteOnlyIfModelIsTrainedOnUser model={"nn_cbf"}>
+                                          <NeuralNetworkCBF/>
+                                      </RouteOnlyIfModelIsTrainedOnUser>
+                                  </RouteOnlyAddedUserDetails>
                               </PrivateRoute>
                           }/>
                           <Route path="/NNCF" element={
                               <PrivateRoute>
-                                  <NeuralNetworkCF/>
-
+                                  <RouteOnlyIfModelIsTrainedOnUser model={"nn_cf"}>
+                                      <NeuralNetworkCF/>
+                                  </RouteOnlyIfModelIsTrainedOnUser>
                               </PrivateRoute>
                           }/>
                           <Route path="/kNNhistory" element={
                               <PrivateRoute>
-                                  <KnnHistory/>
+                                  <RouteOnlyWithHistory>
+                                          <KnnHistory/>
+                                  </RouteOnlyWithHistory>
                               </PrivateRoute>
                           }/>
                           <Route path="/kNNmovie" element={
@@ -112,8 +121,11 @@ function App() {
                           }/>
                           <Route path="/SVD" element={
                               <PrivateRoute>
-                                  <SVD/>
-
+                                  <RouteOnlyWithHistory>
+                                      <RouteOnlyIfModelIsTrainedOnUser model={"svd"}>
+                                          <SVD/>
+                                      </RouteOnlyIfModelIsTrainedOnUser>
+                                  </RouteOnlyWithHistory>
                               </PrivateRoute>
                           }/>
                       </Routes>
