@@ -44,7 +44,7 @@ const MoviesContainer: React.FC<MoviesContainerProps> = ({ apiUrl }) => {
 
                         if (!item.includes(' (')) {
                             return {
-                                ranking: item,
+                                ranking: null,
                                 title: item,
                                 year:  null
                             };

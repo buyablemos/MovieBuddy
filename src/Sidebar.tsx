@@ -26,7 +26,7 @@ const Sidebar = () => {
                 <div className="w-[23vw] overflow-y-auto h-[80vh]">
                     <ul className="space-y-2 font-medium">
                         <li>
-                            <a className="">
+
                             <button
                                 type="button"
                                 className="sidebar-item flex w-full text-white hover:text-black"
@@ -53,6 +53,11 @@ const Sidebar = () => {
                                            className="sidebar-item flex">Neural Network CF</a>
                                     </li>
                                     <li>
+                                        <a href="/metadata"
+                                           className="sidebar-item flex">Metadata - find something by similarities
+                                            between movies</a>
+                                    </li>
+                                    <li>
                                         <a href="/kNNmovie"
                                            className="sidebar-item flex">kNN - find something by movie title</a>
                                     </li>
@@ -65,12 +70,12 @@ const Sidebar = () => {
                                            className="sidebar-item flex">SVD</a>
                                     </li>
                                 </ul>
-                            </a>
+
                         </li>
                         <li>
                             <a href="/"
                                className="sidebar-item flex">
-                            <svg
+                                <svg
                                     className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400"
                                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                     viewBox="0 0 22 21">
@@ -82,7 +87,7 @@ const Sidebar = () => {
                                 <span className="ms-3">Dashboard</span>
                             </a>
                         </li>
-                        <li>
+                        {isLoggedIn && <li>
                             <a href="/user-details"
                                className="sidebar-item flex">
                                 <svg
@@ -94,8 +99,8 @@ const Sidebar = () => {
                                 </svg>
                                 <span className="ms-3">User details</span>
                             </a>
-                        </li>
-                        <li>
+                        </li>}
+                        {isLoggedIn && <li>
                             <a href="/add-rating"
                                className="sidebar-item flex">
                                 <svg className="w-5 h-5 text-yellow-600" aria-hidden="true"
@@ -111,7 +116,7 @@ const Sidebar = () => {
                                 </svg>
                                 <span className="ms-3">Reviews</span>
                             </a>
-                        </li>
+                        </li>}
                         {isLoggedIn && <li>
                             <a
                                 className="sidebar-item flex"
@@ -135,7 +140,7 @@ const Sidebar = () => {
                             </a>
                         </li>}
                         {!isLoggedIn && <li>
-                            <a href="/Login-Register/Login"
+                            <a href="/login"
                                className="sidebar-item flex">
                                 <svg
                                     className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400"

@@ -13,6 +13,35 @@
   transition: filter 300ms;
 }
 
+.radio-button input[type="radio"] {
+  display: none; /* Ukrywa standardowy radio button */
+}
+
+.radio-button {
+  position: relative;
+  padding-left: 30px; /* Miejsce na radio button */
+  cursor: pointer; /* Zmienia kursor na wskaźnik */
+}
+
+/* Styl dla zaznaczonego radio buttona */
+.radio-button.selected {
+  color: purple; /* Fioletowy kolor tekstu */
+}
+
+/* Styl dla przedmiotu pseudo-elementu */
+.radio-button.selected::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px; /* Szerokość kółka */
+  height: 20px; /* Wysokość kółka */
+  border: 2px solid purple; /* Fioletowa ramka */
+  border-radius: 50%; /* Kółko */
+  background-color: purple; /* Fioletowe tło */
+}
+
 .poster {
   height: clamp(60px, 60vh, 300px);
   width: fit-content;
@@ -24,6 +53,9 @@
   width: fit-content;
   height: fit-content;
   margin-right: 1rem;
+}
+.movie-details:hover{
+  transform: scale(110%);
 }
 
 .logo-movie {
@@ -51,6 +83,7 @@
   border-radius: 0.5rem;
   color: white;
   background: #171717;
+  font-size: 16px;
 }
 .sidebar-item:hover {
   background-color: white;
@@ -58,6 +91,7 @@
   border-color: rgb(106, 47, 205);
   border-style: solid;
   border-width: 2px;
+  font-size: 20px;
 }
 
 .sidebar-inside {
@@ -66,6 +100,8 @@
   width: 100%;
   padding-left: 1rem;
 }
+
+
 
 .vertical-text {
   transform: rotate(90deg);
@@ -144,6 +180,7 @@
   border-color: white;
   border-style: solid;
   border-width: 1px;
+
 }
 
 .delete-button{
@@ -174,6 +211,7 @@
 .custom-button:hover {
   background-color: #4B0082; /* Deep Purple */
   color: white; /* Tekst biały przy hoverze */
+  transform: scale(110%);
 }
 
 .delete-button:hover {
@@ -182,6 +220,7 @@
   border-color:  #800000;
   border-style: solid;
   border-width: 1px;
+  transform: scale(110%);
 }
 
 

@@ -18,6 +18,7 @@ import SVD from "./recommendationScreens/SVD.tsx";
 import RouteOnlyAddedUserDetails from "./checkAcces/RouteOnlyAddedUserDetails.tsx";
 import RouteOnlyWithHistory from "./checkAcces/RouteOnlyWithHistory.tsx";
 import RouteOnlyIfModelIsTrainedOnUser from "./checkAcces/RouteOnlyIfModelIsTrainedOnUser.tsx";
+import Metadata from "./recommendationScreens/Metadata.tsx";
 
 
 function App() {
@@ -116,6 +117,12 @@ function App() {
                           <Route path="/kNNmovie" element={
 
                               <KnnMovie/>
+
+
+                          }/>
+                          <Route path="/metadata" element={
+
+                              <Metadata/>
 
 
                           }/>
