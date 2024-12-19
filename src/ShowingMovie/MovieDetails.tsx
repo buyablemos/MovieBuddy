@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import axios from "axios";
 import Modal from "./MovieDetailsWithTrailer.tsx";
 import fetchTrailerId from "../findYTtrailer.ts";
+import Spinner from "../Spinner.tsx";
 
 
 interface MovieDetailsProps {
@@ -56,7 +57,7 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ title,year , ranking }) => 
 
     console.log("Url:", url);
     useEffect(() => {
-        axios.get(url)
+        axios.get(url, { timeout: 20000 })
             .then(response => {
                 console.log("Response data:", response.data);
                 if (response.data.Response === "True") {
@@ -75,21 +76,27 @@ const MovieDetails: React.FC<MovieDetailsProps> = ({ title,year , ranking }) => 
             })
             .catch(error => {
                 console.error("Error fetching movie details from OMDb:", error);
+                setMovieNotFound(true);
             });
     },  [title, year, ranking]);
 
-    if (!movieData) return <p className="text-center mr-4">Loading data</p>
     if (movieNotFound) return (
-        <div>
-        <p className="text-sm text-gray-500 mt-2">{title}</p>
+
+        <div className="flex flex-col justify-between max-h-[50vh]">
+            <p className="text-center mr-4">Details not found</p>
+            <p className="text-sm text-gray-500 mt-2">{title}</p>
             {ranking&&<p className="text-sm text-gray-500">Predicted Ranking: {ranking}</p>}
-        <p className="text-center mr-4">Details not found</p>
         </div>)
+
+    if (!movieData) return (<div className="mr-4">
+        <p className="text-center mb-4">Loading data about movie</p>
+    <Spinner/>
+    </div>)
 
     return (
         <div>
         <div className="max-h-[35vh] min-w-[10vw]">
-        <div className="movie-details darkened-background shadow-md rounded pt-1 pb-1 mb-4 animate-fade-in-up items-center justify-center" onClick={() => handleMovieClick(movieData)}>
+        <div className="get-bigger-on-hover movie-details darkened-background shadow-md rounded pt-1 pb-1 mb-4 animate-fade-in-up items-center justify-center" onClick={() => handleMovieClick(movieData)}>
             <img src={movieData.Poster} alt={movieData.Title} className="poster mb-4 rounded-lg" />
             <p className="text-sm text-gray-500 mt-2">{movieData.Title}</p>
             {ranking&&<p className="text-sm text-gray-500">Predicted Ranking: {ranking}</p>}

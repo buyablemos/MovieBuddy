@@ -2,6 +2,8 @@ import MovieContainer from "../ShowingMovie/MovieContainer.tsx";
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Slider} from "@material-tailwind/react";
+import {debounce} from "lodash";
+
 
 
 interface Movie{
@@ -14,66 +16,82 @@ const Metadata = () => {
     const [sliderValue, setSliderValue] = useState<number>(5);
     const [apiUrl, setApiUrl] = useState<string>("");
     const [movies, setMovies] = useState<Movie[]>([]);
+    const [filteredMovies, setFilteredMovies] = useState<Movie[]>([]);
     const [selectedMovie, setSelectedMovie] = useState<number | null>(null);
     const [searchQuery, setSearchQuery] = useState<string>('');
-    const [timeoutId, setTimeoutId] = useState<number | null>(null);
     const [selectedImprovedMovies, setSelectedImprovedMovies] = useState<boolean>(false);
 
     useEffect(() => {
-        const fetchMovies = async () => {
-            try {
-                const response = await axios.get(`http://127.0.0.1:5000/metadata_movies`);
-                console.log(response);
-                setMovies(response.data.data || []);
-            } catch (error) {
-                console.error('Error fetching movies:', error);
-            }
+        const fetchMovies = () => {
+
+            axios.get(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/metadata_movies`)
+                .then(response => {
+                    console.log(response);
+                    setMovies(response.data.data || []);
+                })
+                .catch(error => {
+                    console.error('Error fetching movies:', error);
+                });
         };
 
         fetchMovies();
     }, []);
 
-    const filteredMovies = movies
-        .filter(movie => movie && movie.title && movie.title.toLowerCase().includes(searchQuery.toLowerCase()));
 
-    useEffect(() => {
-        const findMovie = (selectedMovie: number) => {
-            const match = movies.find(movie => movie.id === selectedMovie);
-            return match ? match.title : null;
-        };
-
-        if (selectedMovie !== null) {
-
-            if(selectedImprovedMovies){
-                setApiUrl(`http://127.0.0.1:5000/recommend_on_movie_metadata_improved?title=${findMovie(selectedMovie)}&n_recommend=${numberofmovies}`); // Adjust your logic here based on findMovie result
-            }
-            else{
-                setApiUrl(`http://127.0.0.1:5000/recommend_on_movie_metadata?title=${findMovie(selectedMovie)}&n_recommend=${numberofmovies}`); // Adjust your logic here based on findMovie result
-            }
-        }
+    const filterMovies =
+        debounce((query: string, movies: Movie[], setFilteredMovies: (movies: Movie[]) => void) => {
+            const filtered = movies.filter(movie => {
+                return movie.title && movie.title.toLowerCase().includes(query.toLowerCase());
+            });
+            setFilteredMovies(filtered);
+        }, 300);
 
 
 
-    }, [selectedMovie, numberofmovies,selectedImprovedMovies]);
+        useEffect(() => {
+            if (selectedMovie === null) return;
+
+            const movieTitle = movies.find(movie => movie.id === selectedMovie)?.title;
+            if (!movieTitle) return;
+
+            const endpoint = selectedImprovedMovies
+                ? "recommend_on_movie_metadata_improved"
+                : "recommend_on_movie_metadata";
+
+            setApiUrl(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/${endpoint}?title=${movieTitle}&n_recommend=${numberofmovies}`);
+        }, [selectedMovie, numberofmovies, selectedImprovedMovies]);
+
+
+
+
 
     const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = parseInt(event.target.value);
         setSliderValue(value);
     };
 
-    useEffect(() => {
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-        }
+    const handleSearchChange = (query:string) => {
+        setSearchQuery(query);
+    };
 
-        const id = setTimeout(() => {
+
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
             setNumberofmovies(sliderValue);
         }, 300);
 
-        setTimeoutId(id);
+        return () => clearTimeout(handler);
+    }, [sliderValue]);
 
-        return () => clearTimeout(id);
-    }, [sliderValue]); // Zależność od sliderValue
+    useEffect(() => {
+        if(searchQuery=="") {
+            setFilteredMovies(movies)
+        }
+        else{
+            filterMovies(searchQuery, movies, setFilteredMovies);
+        }
+    }, [searchQuery,movies]);
 
 
 
@@ -84,11 +102,11 @@ const Metadata = () => {
             <div className="NameHeader rounded  min-w-[70vw] justify-center items-center animate-fade-in-up">
                 <h2 className="mb-4">Search for a movie to find similar</h2>
                 <input
-                    className="text-center bg-white shadow border rounded w-[60vw] py-2 px-3 pr-3 pl-3 text-black mb-2 leading-tight focus:outline-none focus:shadow-outline"
+                    className="input_bg text-center bg-white shadow border rounded w-[60vw] h-[5vh] text-black mb-2 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     placeholder="Search for a movie..."
                     value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
+                    onChange={(e) => handleSearchChange(e.target.value)}
                 />
 
                 <form>
@@ -96,16 +114,17 @@ const Metadata = () => {
                         <select
                             value={selectedMovie ?? ''}
                             onChange={(e) => setSelectedMovie(Number(e.target.value))}
+                            className="min-w-[60vw]"
                         >
                             <option value="" disabled>Select a movie</option>
-                            {filteredMovies.map(movie => (
+                            {filteredMovies.slice(0, 200).map(movie => (
                                 <option className="" key={movie.id} value={movie.id}>
                                     {movie.title}
                                 </option>
                             ))}
                         </select>
                     </div>
-                    <div className="pt-1 pb-1 mb-2 animate-fade-in-down text-white">
+                    <div className="pt-1 pb-1 mb-2 text-white">
 
                         <div className="flex justify-center w-full">
                             <div className="flex flex-row justify-center items-center">
@@ -116,7 +135,7 @@ const Metadata = () => {
                                         color="deep-purple"
                                         value={sliderValue}
                                         onChange={handleSliderChange}
-                                        className="w-[20vw]" // Set the width here
+                                        className="w-[20vw] get-bigger-on-hover"// Set the width here
                                     />
                                 </div>
                             </div>

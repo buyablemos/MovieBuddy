@@ -17,27 +17,23 @@ const KnnMovie = () => {
     const [movies, setMovies] = useState<Movie[]>([]);
     const [selectedMovie, setSelectedMovie] = useState<number|null>(null);
     const [searchQuery, setSearchQuery] = useState<string>('');
-    const [timeoutId, setTimeoutId] = useState<number | null>(null); // Identyfikator timera
 
 
 
     useEffect(() => {
+        const fetchMovies = () => {
 
-
-
-        const fetchMovies = async () => {
-
-            try {
-                const response = await axios.get(`http://127.0.0.1:5000/movies`);
-                console.log(response);
-                setMovies(response.data.data);
-            } catch (error) {
-                console.error('Error fetching movies:', error);
-            }
+            axios.get(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/movies`)
+                .then(response => {
+                    console.log(response);
+                    setMovies(response.data.data || []);
+                })
+                .catch(error => {
+                    console.error('Error fetching movies:', error);
+                });
         };
 
         fetchMovies();
-
     }, []);
 
     const filteredMovies = movies.filter(movie =>
@@ -57,8 +53,8 @@ const KnnMovie = () => {
         }
 
         if (selectedMovie!== null) {
-            setApiUrl2(`http://127.0.0.1:5000/recommend_on_movie_kNN_CBF?movie=${findMovie(selectedMovie)}&n_recommend=${numberofmovies}&movieId=${selectedMovie}`);
-            setApiUrl(`http://127.0.0.1:5000/recommend_on_movie_kNN_CF?movie=${findMovie(selectedMovie)}&n_recommend=${numberofmovies}&movieId=${selectedMovie}`);
+            setApiUrl2(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/recommend_on_movie_kNN_CBF?movie=${findMovie(selectedMovie)}&n_recommend=${numberofmovies}&movieId=${selectedMovie}`);
+            setApiUrl(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/recommend_on_movie_kNN_CF?movie=${findMovie(selectedMovie)}&n_recommend=${numberofmovies}&movieId=${selectedMovie}`);
         }
 
 
@@ -72,22 +68,12 @@ const KnnMovie = () => {
     };
 
     useEffect(() => {
-        // Czyść poprzedni timer, jeśli istnieje
-        if (timeoutId) {
-            clearTimeout(timeoutId);
-        }
-
-        // Ustaw nowy timer
-        const id = setTimeout(() => {
-            setNumberofmovies(sliderValue); // Zaktualizuj stan numberofmovies po 500 ms
+        const handler = setTimeout(() => {
+            setNumberofmovies(sliderValue);
         }, 300);
 
-        // Ustaw identyfikator timera w stanie
-        setTimeoutId(id);
-
-        // Oczyść timer po unmount lub przed nowym wywołaniem
-        return () => clearTimeout(id);
-    }, [sliderValue]); // Zależność od sliderValue
+        return () => clearTimeout(handler);
+    }, [sliderValue]);
 
 
     return (
@@ -96,18 +82,21 @@ const KnnMovie = () => {
 
             <div className="NameHeader rounded  min-w-[70vw] justify-center items-center animate-fade-in-up">
                 <h2 className="mb-4">Search for a movie to find similar</h2>
+
                 <input
-                    className="text-center bg-white shadow border rounded w-[60vw] py-2 px-3 pr-3 pl-3 text-black mb-2 leading-tight focus:outline-none focus:shadow-outline"
+                    className="input_bg text-center bg-white border-1 rounded w-[60vw] h-[5vh] text-black mb-2 leading-tight focus:outline-none focus:shadow-outline"
                     type="text"
                     placeholder="Search for a movie..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
                 />
+
                 <form>
                     <div className="select-wrapper">
                         <select
                             value={selectedMovie ?? ''}
                             onChange={(e) => setSelectedMovie(Number(e.target.value))}
+                            className="min-w-[60vw]"
                         >
                             <option value="" disabled>Select a movie</option>
                             {filteredMovies.map(movie => (
@@ -117,18 +106,18 @@ const KnnMovie = () => {
                             ))}
                         </select>
                     </div>
-                    <div className="pt-1 pb-1 mb-2 animate-fade-in-down text-white">
+                    <div className="pt-1 pb-1 mb-2 text-white">
 
                         <div className="flex justify-center w-full">
                             <div className="flex flex-row justify-center items-center">
                                 <h2 className="mr-4">Pick number of movies: </h2>
-                                <div>
+                                <div className="">
                                     <h3 className="mb-2">Actual: {sliderValue}</h3>
                                     <Slider
                                         color="deep-purple"
                                         value={sliderValue}
                                         onChange={handleSliderChange}
-                                        className="w-[20vw]" // Set the width here
+                                        className="w-[20vw] get-bigger-on-hover"
                                     />
                                 </div>
                             </div>
@@ -141,11 +130,11 @@ const KnnMovie = () => {
             <div className="flex flex-col text-white max-h-[60vh]">
                 <div className="overflow-y-auto">
                     <div className="NameHeader rounded pt-1 pb-1 mb-4 animate-fade-in-up text-white">
-                        {apiUrl && <h1>Recommended by CF version</h1>}
+                        {apiUrl && <h1>Recommended by kNN CF version</h1>}
                         {apiUrl && <MovieContainer apiUrl={apiUrl}/>}
                     </div>
                     <div className="NameHeader rounded pt-1 pb-1 mb-4 animate-fade-in-up text-white">
-                        {apiUrl2 && <h1>Recommended by CBF version</h1>}
+                        {apiUrl2 && <h1>Recommended by kNN CBF version</h1>}
                         {apiUrl2 && <MovieContainer apiUrl={apiUrl2}/>}
                     </div>
                 </div>

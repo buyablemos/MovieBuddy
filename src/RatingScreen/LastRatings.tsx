@@ -21,7 +21,7 @@ const LastRatings: React.FC<LastRatingsProps> = ({userId} ) => {
     const fetchLastRatings = async () => {
 
         try {
-            const response = await axios.get(`http://127.0.0.1:5000/${userId}/last-ratings`);
+            const response = await axios.get(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/${userId}/last-ratings`);
             setLastRatings(response.data.data);
         } catch (error) {
             console.error('Error fetching ratings:', error);
@@ -31,7 +31,7 @@ const LastRatings: React.FC<LastRatingsProps> = ({userId} ) => {
 
     const handleDelete = async (movieId: number) => {
         try {
-            await axios.delete(`http://127.0.0.1:5000/${userId}/ratings/${movieId}`);
+            await axios.delete(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/${userId}/ratings/${movieId}`);
             setLastRatings(lastRatings.filter(rating => rating.movieId !== movieId));
         } catch (error) {
             console.error('Error deleting rating:', error);

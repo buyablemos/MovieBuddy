@@ -107,7 +107,7 @@ const Register = () => {
         }
 
         try {
-            const response = await axios.post('http://127.0.0.1:5000/register', {
+            const response = await axios.post('http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/register', {
                 username,
                 email,
                 password,

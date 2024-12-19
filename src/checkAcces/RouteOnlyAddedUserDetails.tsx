@@ -12,7 +12,7 @@ const RouteOnlyAddedUserDetails = ({ children }: { children: React.ReactNode }) 
 
 
         const fetchAuthentication = (username:string)=>{
-            axios.get(`http://127.0.0.1:5000/check_user_details/${username}`).then((response: AxiosResponse) => {
+            axios.get(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/check_user_details/${username}`).then((response: AxiosResponse) => {
                 if(response.data.success==true){
                     setIsAuthenticated(true);
                 }

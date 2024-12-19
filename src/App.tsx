@@ -36,13 +36,12 @@ function App() {
 
                           <div>
                               <div className="logo-movie">MovieBuddy</div>
-                              <div className="font-extralight">Bachelor's thesis</div>
+                              <div className="font-extralight">Engineer's Thesis</div>
                           </div>
                           <div className="flex">
 
 
                               <div>
-                                  <div className="font-extralight mb-2">Powered by</div>
 
                                   <div className="flex items-center justify-between">
 
@@ -94,17 +93,19 @@ function App() {
                           <Route path="/NNCBF" element={
                               <PrivateRoute>
                                   <RouteOnlyAddedUserDetails>
-                                      <RouteOnlyIfModelIsTrainedOnUser model={"nn_cbf"}>
+
                                           <NeuralNetworkCBF/>
-                                      </RouteOnlyIfModelIsTrainedOnUser>
+
                                   </RouteOnlyAddedUserDetails>
                               </PrivateRoute>
                           }/>
                           <Route path="/NNCF" element={
                               <PrivateRoute>
+                                  <RouteOnlyWithHistory>
                                   <RouteOnlyIfModelIsTrainedOnUser model={"nn_cf"}>
                                       <NeuralNetworkCF/>
                                   </RouteOnlyIfModelIsTrainedOnUser>
+                                      </RouteOnlyWithHistory>
                               </PrivateRoute>
                           }/>
                           <Route path="/kNNhistory" element={

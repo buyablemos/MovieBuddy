@@ -19,7 +19,7 @@ const RouteOnlyIfModelIsTrainedOnUser: React.FC<RouteOnlyIfModelIsTrainedOnUserP
 
 
         const fetchAuthentication = (username:string, model:string)=>{
-            axios.get(`http://127.0.0.1:5000/check_user_access_model/${username}/${model}`).then((response: AxiosResponse) => {
+            axios.get(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/check_user_access_model/${username}/${model}`).then((response: AxiosResponse) => {
                 if(response.data.success==true){
                     setIsAuthenticated(true);
                 }

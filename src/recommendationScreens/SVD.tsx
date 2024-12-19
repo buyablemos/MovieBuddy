@@ -7,6 +7,7 @@ const SVD = () => {
     const [userId, setUserId] = useState<number | null>(null);
     const [numberofmovies, setNumberofmovies] = useState<number>(5);
     const [apiUrl, setApiUrl] = useState<string>("");
+    const [sliderValue,setSliderValue] = useState<number>(5);
 
 
     useEffect(() => {
@@ -15,7 +16,7 @@ const SVD = () => {
             const username = localStorage.getItem('user');
 
             try {
-                const response = await axios.get(`http://127.0.0.1:5000/users/${username}/userid`);
+                const response = await axios.get(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/users/${username}/userid`);
                 setUserId(response.data.userid);
             } catch (error) {
                 console.error('Error fetching user id:', error);
@@ -28,23 +29,32 @@ const SVD = () => {
 
     useEffect(() => {
         if (userId !== null) {
-            setApiUrl(`http://127.0.0.1:5000/recommend_on_user_SVD?user_id=${userId}&n_reccomend=5`);
+            setApiUrl(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/recommend_on_user_SVD?user_id=${userId}&n_reccomend=5`);
         }
     }, [userId]);
 
 
-    const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNumberofmovies(parseInt((event.target.value)));
-    };
-
-    const handleRefresh = () => {
+    useEffect(() => {
         // Funkcja do odświeżania danych
         if (userId !== null) {
-            const newApiUrl = `http://127.0.0.1:5000/recommend_on_user_SVD?user_id=${userId}&n_recommend=${numberofmovies}`;
-            console.log('Refreshing API URL:', newApiUrl);
+            const newApiUrl = `http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/recommend_on_user_SVD?user_id=${userId}&n_recommend=${numberofmovies}`;
+
             setApiUrl(newApiUrl);
         }
+    }, [numberofmovies]);
+
+    const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const value = parseInt(event.target.value);
+        setSliderValue(value);
     };
+
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setNumberofmovies(sliderValue);
+        }, 300);
+
+        return () => clearTimeout(handler);
+    }, [sliderValue]);
 
 
 
@@ -63,19 +73,19 @@ const SVD = () => {
                                 color="deep-purple"
                                 value={numberofmovies}
                                 onChange={handleSliderChange}
-                                className="w-[20vw]" // Set the width here
+                                className="w-[20vw] mb-4 get-bigger-on-hover"  // Set the width here
                             />
                         </div>
                     </div>
                 </div>
-                <button className="custom-button mt-2" onClick={handleRefresh}>Refresh</button>
+
             </div>
 
             {(apiUrl)&&
                 <div className="flex flex-col text-white max-h-[60vh]">
                     <div className="overflow-y-auto">
                         <div className="NameHeader rounded pt-1 pb-1 mb-4 animate-fade-in-up text-white">
-                            {apiUrl && <h1>Recommended by CF version</h1>}
+                            {apiUrl && <h1>Recommended by SVD version</h1>}
                             {apiUrl && <MovieContainer apiUrl={apiUrl}/>}
                         </div>
                     </div>

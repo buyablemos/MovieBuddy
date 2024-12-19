@@ -13,34 +13,6 @@
   transition: filter 300ms;
 }
 
-.radio-button input[type="radio"] {
-  display: none; /* Ukrywa standardowy radio button */
-}
-
-.radio-button {
-  position: relative;
-  padding-left: 30px; /* Miejsce na radio button */
-  cursor: pointer; /* Zmienia kursor na wskaźnik */
-}
-
-/* Styl dla zaznaczonego radio buttona */
-.radio-button.selected {
-  color: purple; /* Fioletowy kolor tekstu */
-}
-
-/* Styl dla przedmiotu pseudo-elementu */
-.radio-button.selected::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 20px; /* Szerokość kółka */
-  height: 20px; /* Wysokość kółka */
-  border: 2px solid purple; /* Fioletowa ramka */
-  border-radius: 50%; /* Kółko */
-  background-color: purple; /* Fioletowe tło */
-}
 
 .poster {
   height: clamp(60px, 60vh, 300px);
@@ -81,6 +53,7 @@
   justify-content: center;
   padding: 1rem;
   border-radius: 0.5rem;
+  border-width: 2px;
   color: white;
   background: #171717;
   font-size: 16px;
@@ -91,7 +64,7 @@
   border-color: rgb(106, 47, 205);
   border-style: solid;
   border-width: 2px;
-  font-size: 20px;
+  font-size: 18px;
 }
 
 .sidebar-inside {
@@ -272,6 +245,16 @@ select:focus {
   outline: none;
 }
 
+.input_bg:hover {
+  border-color: blue;
+  border-width: 3px;
+}
+
+.input_bg:focus {
+  border-color: darkblue;
+  outline: none;
+}
+
 
 .select-wrapper {
   position: relative;
@@ -287,6 +270,14 @@ select:focus {
   pointer-events: none;
   color: #888;
   font-size: 16px;
+}
+
+.get-bigger-on-hover {
+  transition: transform 0.3s ease;
+}
+
+.get-bigger-on-hover:hover {
+  transform: scale(1.1);
 }
 
 

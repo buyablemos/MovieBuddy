@@ -103,7 +103,7 @@ const Login = () => {
         }
 
         try {
-            const response = await axios.post('http://127.0.0.1:5000/login', {
+            const response = await axios.post(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/login`, {
                 username,
                 password
             });
@@ -143,7 +143,7 @@ const Login = () => {
 
 
                 try {
-                    const response = await axios.post('http://127.0.0.1:5000/login-google', {
+                    const response = await axios.post(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/login-google`, {
                         email,
                         googleId,
                     });

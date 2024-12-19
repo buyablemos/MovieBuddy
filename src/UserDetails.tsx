@@ -76,7 +76,7 @@ const UserDetails: React.FC = () => {
         if (!username) return;
 
         try {
-            const response = await axios.get(`http://127.0.0.1:5000/users/${username}`);
+            const response = await axios.get(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/users/${username}`);
             setUser(response.data);
             setEmail(response.data.email);
             setGender(response.data.gender);
@@ -102,7 +102,7 @@ const UserDetails: React.FC = () => {
 
         e.preventDefault()
         try {
-            const response = await axios.put(`http://127.0.0.1:5000/users/${username}`, {
+            const response = await axios.post(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/users/${username}`, {
                 email,
                 gender,
                 age,

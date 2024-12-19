@@ -7,6 +7,7 @@ const NeuralNetworkCF= () => {
     const [userId, setUserId] = useState<number | null>(null);
     const [numberofmovies, setNumberofmovies] = useState<number>(5);
     const [apiUrl, setApiUrl] = useState<string>("");
+    const [sliderValue,setSliderValue] = useState<number>(5);
 
 
     useEffect(() => {
@@ -15,7 +16,7 @@ const NeuralNetworkCF= () => {
             const username = localStorage.getItem('user');
 
             try {
-                const response = await axios.get(`http://127.0.0.1:5000/users/${username}/userid`);
+                const response = await axios.get(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/users/${username}/userid`);
                 setUserId(response.data.userid);
             } catch (error) {
                 console.error('Error fetching user id:', error);
@@ -26,25 +27,29 @@ const NeuralNetworkCF= () => {
 
     }, []);
 
-    useEffect(() => {
-        if (userId !== null) {
-            setApiUrl(`http://127.0.0.1:5000/reccomend_on_user_NN_CF?user_id=${userId}&n_recommend=5`);
-        }
-    }, [userId]);
-
-
     const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNumberofmovies(parseInt((event.target.value)));
+        const value = parseInt(event.target.value);
+        setSliderValue(value);
     };
 
-    const handleRefresh = () => {
-        // Funkcja do odświeżania danych
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setNumberofmovies(sliderValue);
+        }, 300);
+
+        return () => clearTimeout(handler);
+    }, [sliderValue]);
+
+
+
+    useEffect(() => {
         if (userId !== null) {
-            const newApiUrl = `http://127.0.0.1:5000/reccomend_on_user_NN_CF?user_id=${userId}&n_recommend=${numberofmovies}`;
+            const newApiUrl = `http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/reccomend_on_user_NN_CF?user_id=${userId}&n_recommend=${numberofmovies}`;
             console.log('Refreshing API URL:', newApiUrl);
             setApiUrl(newApiUrl);
         }
-    };
+
+    }, [userId,numberofmovies]);
 
 
 
@@ -58,17 +63,17 @@ const NeuralNetworkCF= () => {
                     <div className="flex flex-row justify-center items-center">
                         <h2 className="mr-4">Pick number of movies: </h2>
                         <div>
-                            <h3 className="mb-2">Actual: {numberofmovies}</h3>
+                            <h3 className="mb-2">Actual: {sliderValue}</h3>
                             <Slider
                                 color="deep-purple"
-                                value={numberofmovies}
+                                value={sliderValue}
                                 onChange={handleSliderChange}
-                                className="w-[20vw]" // Set the width here
+                                className="w-[20vw] mb-4 get-bigger-on-hover" // Set the width here
                             />
                         </div>
                     </div>
                 </div>
-                <button className="custom-button mt-4" onClick={handleRefresh}>Refresh</button>
+
             </div>
 
             {(apiUrl)&&

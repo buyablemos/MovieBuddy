@@ -9,6 +9,7 @@ const KnnHistory = () => {
     const [numberofmovies, setNumberofmovies] = useState<number>(5);
     const [apiUrl, setApiUrl] = useState<string>("");
     const [apiUrl2, setApiUrl2] = useState<string>("");
+    const [sliderValue, setSliderValue] = useState<number>(5);
 
 
     useEffect(() => {
@@ -17,7 +18,7 @@ const KnnHistory = () => {
             const username = localStorage.getItem('user');
 
             try {
-                const response = await axios.get(`http://127.0.0.1:5000/users/${username}/userid`);
+                const response = await axios.get(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/users/${username}/userid`);
                 setUserId(response.data.userid);
             } catch (error) {
                 console.error('Error fetching user id:', error);
@@ -30,26 +31,34 @@ const KnnHistory = () => {
 
     useEffect(() => {
         if (userId !== null) {
-            setApiUrl(`http://127.0.0.1:5000/recommend_on_history_kNN_CF?user_id=${userId}&n_recommend=5`);
-            setApiUrl2(`http://127.0.0.1:5000/recommend_on_history_kNN_CBF?user_id=${userId}&n_recommend=5`);
+            setApiUrl(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/recommend_on_history_kNN_CF?user_id=${userId}&n_recommend=5`);
+            setApiUrl2(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/recommend_on_history_kNN_CBF?user_id=${userId}&n_recommend=5`);
         }
     }, [userId]);
 
 
     const handleSliderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setNumberofmovies(parseInt((event.target.value)));
+        const value = parseInt(event.target.value);
+        setSliderValue(value);
     };
 
-    const handleRefresh = () => {
-        // Funkcja do odświeżania danych
-        if (userId !== null) {
-            const newApiUrl = `http://127.0.0.1:5000/recommend_on_history_kNN_CF?user_id=${userId}&n_recommend=${numberofmovies}`;
-            const newApiUrl2 = `http://127.0.0.1:5000/recommend_on_history_kNN_CBF?user_id=${userId}&n_recommend=${numberofmovies}`;
-            console.log('Refreshing APIs URL');
-            setApiUrl(newApiUrl);
-            setApiUrl2(newApiUrl2);
-        }
-    };
+    useEffect(() => {
+        const handler = setTimeout(() => {
+            setNumberofmovies(sliderValue);
+        }, 300);
+
+        return () => clearTimeout(handler);
+    }, [sliderValue]);
+
+
+    useEffect(() => {
+
+        setApiUrl(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/recommend_on_history_kNN_CF?user_id=${userId}&n_recommend=${numberofmovies}`);
+        setApiUrl2(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/recommend_on_history_kNN_CBF?user_id=${userId}&n_recommend=${numberofmovies}`);
+
+
+    }, [numberofmovies]);
+
 
 
 
@@ -69,12 +78,12 @@ const KnnHistory = () => {
                                 color="deep-purple"
                                 value={numberofmovies}
                                 onChange={handleSliderChange}
-                                className="w-[20vw]" // Set the width here
+                                className="w-[20vw] mb-4 get-bigger-on-hover"// Set the width here
                             />
                         </div>
                     </div>
                 </div>
-                <button className="custom-button mt-2" onClick={handleRefresh}>Refresh</button>
+
             </div>
 
             {(apiUrl||apiUrl2)&&
@@ -82,13 +91,13 @@ const KnnHistory = () => {
                     <div className="overflow-y-auto">
                         <RouteOnlyIfModelIsTrainedOnUser model={"knn_cf"}>
                         <div className="NameHeader rounded pt-1 pb-1 mb-4 animate-fade-in-up text-white">
-                            {apiUrl && <h1>Recommended by CF version</h1>}
+                            {apiUrl && <h1>Recommended by kNN CF version</h1>}
                             {apiUrl && <MovieContainer apiUrl={apiUrl}/>}
                         </div>
                         </RouteOnlyIfModelIsTrainedOnUser>
                         <RouteOnlyIfModelIsTrainedOnUser model={"knn_cbf"}>
                         <div className="NameHeader rounded pt-1 pb-1 mb-4 animate-fade-in-up text-white">
-                            {apiUrl2 && <h1>Recommended by CBF version</h1>}
+                            {apiUrl2 && <h1>Recommended by kNN CBF version</h1>}
                             {apiUrl2 && <MovieContainer apiUrl={apiUrl2}/>}
                         </div>
                         </RouteOnlyIfModelIsTrainedOnUser>

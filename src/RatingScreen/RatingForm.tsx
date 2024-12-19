@@ -26,7 +26,7 @@ const AddRating: React.FC = () => {
         const username = localStorage.getItem('user');
 
         try {
-            const response = await axios.get(`http://127.0.0.1:5000/users/${username}/movies-unwatched`);
+            const response = await axios.get(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/users/${username}/movies-unwatched`);
             console.log(response);
             setMovies(response.data.data);
         } catch (error) {
@@ -40,7 +40,7 @@ const AddRating: React.FC = () => {
             const username = localStorage.getItem('user');
 
             try {
-                const response = await axios.get(`http://127.0.0.1:5000/users/${username}/userid`);
+                const response = await axios.get(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/users/${username}/userid`);
                 setUserId(response.data.userid);
             } catch (error) {
                 console.error('Error fetching user id:', error);
@@ -58,7 +58,7 @@ const AddRating: React.FC = () => {
 
         if (selectedMovie != null) {
             try {
-                await axios.post(`http://127.0.0.1:5000/add-rating`, {
+                await axios.post(`http://${import.meta.env.VITE_IP}:${import.meta.env.VITE_PORT}/add-rating`, {
 
                     rating: rating,
                     userId: userId,
@@ -80,10 +80,10 @@ const AddRating: React.FC = () => {
         movie.title.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    if(userId == null){
+    if(userId === null){
         return (
-            <div>
-                <h1 className="darkened-background shadow-md rounded pt-1 pb-1 mb-4 animate-fade-in-down text-white">Please add information about yourself to add rating</h1>
+            <div className="darkened-background shadow-md rounded pt-1 pb-1 mb-4 animate-fade-in-down text-white">
+                <h1 className="shadow-md rounded pt-1 pb-1 mb-4 animate-fade-in-down text-white">Please add information about yourself to add rating</h1>
                 <div className="text-center">
                     <Link to="/user-details" className="text-blue-500 hover:text-blue-200">Complete your profile</Link>
                 </div>

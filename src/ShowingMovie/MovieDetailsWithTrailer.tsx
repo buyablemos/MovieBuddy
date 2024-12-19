@@ -57,7 +57,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, movie }) => {
                     className="mb-4 mt-4 custom-button" type="submit"
                     onClick={onClose}
                 >
-                    Zamknij
+                    Close
                 </button>
                 </div>
             </div>

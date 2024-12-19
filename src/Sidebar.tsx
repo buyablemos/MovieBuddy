@@ -23,7 +23,7 @@ const Sidebar = () => {
             onMouseLeave={() => setIsHovered(false)}
         >
             <div className="sidebar-inside flex py-4 rounded">
-                <div className="w-[23vw] overflow-y-auto h-[80vh]">
+                <div className="w-[23vw] overflow-y-auto h-100">
                     <ul className="space-y-2 font-medium">
                         <li>
 
@@ -36,14 +36,14 @@ const Sidebar = () => {
                                 <img src="/src/assets/recommendation-icon.png" alt="Recommendation Icon"
                                      className="w-5 h-5"/>
                                 <span
-                                    className="flex-1 ms-3 text-center whitespace-nowrap">Recommendations</span>
+                                    className="flex-1 ms-3 text-center whitespace-nowrap">Recommender</span>
                                 <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
                                      fill="none" viewBox="0 0 10 6">
                                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"
                                           strokeWidth="2" d="m1 1 4 4 4-4"/>
                                 </svg>
                             </button>
-                                <ul id="dropdown-example" className={`${isOpen ? 'block' : 'hidden'} py-2 space-y-2`}>
+                                <ul id="dropdown-example" className={`${isOpen ? 'block' : 'hidden'} py-2 space-y-2 border-white border-2 px-2 border-dotted rounded`}>
                                     <li>
                                         <a href="/NNCBF"
                                            className="sidebar-item flex">Neural Network CBF</a>
@@ -123,6 +123,7 @@ const Sidebar = () => {
                                 onClick={() => {
                                     localStorage.removeItem('token');
                                     sessionStorage.removeItem('token');
+                                    localStorage.removeItem('user');
                                     window.location.reload();
                                 }
                                 }
